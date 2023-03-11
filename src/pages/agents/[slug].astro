@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import Abilities from "../../components/Abilities.astro";
 
 export async function getStaticPaths() {
   const characters = await fetch("https://valorant-api.com/v1/agents?isPlayableCharacter=true",
@@ -21,13 +22,28 @@ const { slug } = Astro.params;
 const data = await fetch(`https://valorant-api.com/v1/agents/${slug}`).then(
   (res) => res.json()
 );
+
+const call = data.data;
+const abilities = data.data.abilities;
 ---
 
 <Layout title={`Agent: ${data.data.displayName}`}>
 	<main>
-		<h1 class="text-center text-2xl my-5 font-bold">Agent : {data.data.displayName}</h1>
-		<div class="flex flex-wrap gap-10 justify-center">
-      <img src={data.data.fullPortraitV2} alt="">
+		<div class="flex flex-col justify-center">
+      <img src={call.fullPortraitV2} alt="">
+      <h1 class="text-center text-2xl my-5 font-bold">{call.displayName}</h1>
+      <p class="w-3/4 mx-auto text-justify">
+        {call.description}
+      </p>
+
+      <h1 class="text-center text-2xl my-5 font-bold">{`${call.role.displayName}`}</h1>
+
+      {
+				abilities.map(abil => (
+					<Abilities abilName = {abil.displayName} abilDescr = {abil.description} abilImg = {abil.displayIcon} voiceLine={call.voiceLine.mediaList.wave}/>
+				))
+			  }
+
 		</div>
 	</main>
 </Layout>
