@@ -1,0 +1,33 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const characters = await fetch("https://valorant-api.com/v1/agents?isPlayableCharacter=true",
+  {
+    method: "GET",
+    headers: {"Accept": "*/*"} 
+  }).then(
+    (res) => res.json()
+  );
+  const agentData = characters.data;
+
+  return agentData.map((el: any) => ({
+    params: {
+      slug: el.uuid,
+    },
+  }));
+}
+const { slug } = Astro.params;
+const data = await fetch(`https://valorant-api.com/v1/agents/${slug}`).then(
+  (res) => res.json()
+);
+---
+
+<Layout title={`Agent: ${data.data.displayName}`}>
+	<main>
+		<h1 class="text-center text-2xl my-5 font-bold">Agent : {data.data.displayName}</h1>
+		<div class="flex flex-wrap gap-10 justify-center">
+      <img src={data.data.fullPortraitV2} alt="">
+		</div>
+	</main>
+</Layout>
