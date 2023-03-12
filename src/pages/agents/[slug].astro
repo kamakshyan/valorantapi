@@ -25,6 +25,9 @@ const data = await fetch(`https://valorant-api.com/v1/agents/${slug}`).then(
 
 const call = data.data;
 const abilities = data.data.abilities;
+// const bgColor = data.data.backgroundGradientColors[0];
+// const bgHex = bgColor.slice(0,6)
+// const color = "bg-[#"+bgHex+"]";
 ---
 
 <Layout title={`Agent: ${data.data.displayName}`}>
