@@ -4,7 +4,11 @@ import {Icon} from 'astro-icon';
 const {title} = Astro.props;
 ---
 
-<div class="flex gap-10 p-4 border border-b-2 items-center justify-between">
+<div class="flex gap-10 p-4 border border-b-2 border-gray-400 items-center justify-between">
     <a class="flex items-center" href="/"><Icon class="w-8" name="majesticons:home-line"/></a>
     <p class="text-xl font-bold">{title}</p>
+    <div class="flex gap-2 px-4 py-2 items-center rounded-full border-2 border-gray-400">
+        <Icon class="w-8" name="ic:sharp-search"/>
+        <input class=" border rounded-r-full bg-slate-200 focus:outline-none" type="text" name="search" placeholder="Search.." id="">
+    </div>
 </div>
